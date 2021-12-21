@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Entity", "Iatec.Knowledge.Assessment.Entity\Iatec.Knowledge.Assessment.Entity.csproj", "{57695883-E300-4C07-93EA-C7DB1B6ACF52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.KnowledgeAssessment.Context", "Iatec.KnowledgeAssessment.Context\Iatec.KnowledgeAssessment.Context.csproj", "{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Contracts", "Iatec.Knowledge.Assessment.Contracts\Iatec.Knowledge.Assessment.Contracts.csproj", "{A0A4566E-3F84-4458-B222-61F533E68148}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{57695883-E300-4C07-93EA-C7DB1B6ACF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57695883-E300-4C07-93EA-C7DB1B6ACF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57695883-E300-4C07-93EA-C7DB1B6ACF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0A4566E-3F84-4458-B222-61F533E68148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0A4566E-3F84-4458-B222-61F533E68148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0A4566E-3F84-4458-B222-61F533E68148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0A4566E-3F84-4458-B222-61F533E68148}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

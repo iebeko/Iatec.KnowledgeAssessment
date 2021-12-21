@@ -11,8 +11,8 @@ namespace Iatec.Knowledge.Assessment.Entity
     {
         [Key]
         public int IdUser { get; set; }
-        public string Nome { get; set; }
-        public string SobreNome { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
         public string Alias { get; set; }
         public string PhoneNumber { get; set; }
     }

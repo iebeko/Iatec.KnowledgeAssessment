@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 
 namespace Iatec.Knowledge.Assessment.Entity
 {
-    public class Eventos
+    public class Event
     {
         [Key]
-        public Guid IdEvento { get; set; }
-        public string Nome { get; set; }
-        public string Descripcao { get; set; }
-        public DateTime Data { get; set; }
-        public string Local { get; set; }
-        public TipoEventos TipoEvento { get; set; }
+        public Guid IdEvent { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime Date { get; set; }
+        public string Place { get; set; }
+        public TypeEvents TypeEvent { get; set; }
         public string UserOwner { get; set; }
         public bool IsDeleted { get; set; }
+        public bool  IsShareable { get; set; }
     }
     
-    public enum TipoEventos 
+    public enum TypeEvents 
     {
         Exclusivo,Compartilhado
     }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Iatec.Knowledge.Assessment.Entity
 {
-    public class Agenda
+    public class Schedule
     {
-        public int IdAgenda { get; set; }
+        public int IdSchedule { get; set; }
         public int IdUser { get; set; }
-        public virtual IEnumerable<Eventos> EventosList{ get; set; }
+        public virtual IEnumerable<ScheduleEvent> EventosList{ get; set; }
     }
 }

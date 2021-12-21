@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Iatec.Knowledge.Assessment.Entity
 {
-   public class AgendaEventos
+   public class ScheduleEvent
     {
         [Key]
         public int IdAgendaEventos { get; set; }
