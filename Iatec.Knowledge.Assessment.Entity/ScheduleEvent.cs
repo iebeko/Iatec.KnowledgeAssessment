@@ -10,15 +10,16 @@ namespace Iatec.Knowledge.Assessment.Entity
    public class ScheduleEvent
     {
         [Key]
-        public int IdAgendaEventos { get; set; }
-        public int IdEvento { get; set; }
+        public int IdScheduleEvent { get; set; }
+        public int IdEvent { get; set; }
        
-        public int IdAgenda { get; set; }
-        public string NomeEvento { get; set; }
-        public string Mes { get; set; }
-        public string MesLiteral { get; set; }
+        public int IdSchedule { get; set; }
+        public string NameEvent { get; set; }
+        public string Month { get; set; }
+        public string MonthName { get; set; }
         public int Year { get; set; }
-        public DateTime DataEvento { get; set; }
+        public DateTime DateEvent { get; set; }
+
         
     }
 }

@@ -58,9 +58,9 @@ namespace Iatec.Knowledge.Assessment.Contracts
 
         public void Save() 
         {
-            context.SaveChangesAsync();
+            context.SaveChanges();
         }
-        public async Task SaveNoAsync() 
+        public async Task SaveAsync() 
         {
             await context.SaveChangesAsync();
         }
