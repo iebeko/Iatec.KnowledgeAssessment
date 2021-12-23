@@ -10,6 +10,7 @@ namespace Iatec.Knowledge.Assessment.Entity
     {
         public int IdSchedule { get; set; }
         public int IdUser { get; set; }
+        public string NameSchedule { get; set; }
         public virtual IEnumerable<ScheduleEvent> EventosList{ get; set; }
     }
 }

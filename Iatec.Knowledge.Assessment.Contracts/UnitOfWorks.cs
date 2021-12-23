@@ -20,6 +20,21 @@ namespace Iatec.Knowledge.Assessment.Contracts
         private GenericRepository<Schedule> scheduleRepository;
         private GenericRepository<ScheduleEvent> scheduleEventRepository;
         private GenericRepository<User> userRepository;
+        private GenericRepository<EventNotification> eventNotificationRepository;
+
+
+
+        public GenericRepository<EventNotification> EventNotificationRepository 
+        {
+            get 
+            {
+                if (this.eventNotificationRepository == null) 
+                {
+                    this.eventNotificationRepository = new GenericRepository<EventNotification>(context);
+                }
+                return eventNotificationRepository;
+            }
+        }
 
         public GenericRepository<Event> EventRepository 
         {
@@ -44,7 +59,7 @@ namespace Iatec.Knowledge.Assessment.Contracts
             }
         }
 
-        private GenericRepository<Schedule> ScheduleRepository 
+        public GenericRepository<Schedule> ScheduleRepository 
         {
             get 
             {

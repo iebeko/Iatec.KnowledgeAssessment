@@ -19,6 +19,7 @@ namespace Iatec.KnowledgeAssessment.Context
         public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<EventNotification> EventNotifications { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

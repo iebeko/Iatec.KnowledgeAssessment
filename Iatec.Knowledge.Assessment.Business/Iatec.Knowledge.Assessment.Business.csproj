@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventBusiness.cs" />
+    <Compile Include="EventNotificationBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleBusiness.cs" />
+    <Compile Include="ScheduleEventBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iatec.Knowledge.Assessment.Contracts\Iatec.Knowledge.Assessment.Contracts.csproj">

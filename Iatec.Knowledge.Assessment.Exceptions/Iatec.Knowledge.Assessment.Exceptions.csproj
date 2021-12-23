@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventException.cs" />
+    <Compile Include="EventNotificationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleEventException.cs" />
     <Compile Include="ScheduleException.cs" />
