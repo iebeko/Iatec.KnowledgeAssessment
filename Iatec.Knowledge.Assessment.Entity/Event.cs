@@ -14,6 +14,9 @@ namespace Iatec.Knowledge.Assessment.Entity
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public int Days { get; set; }
         public string Place { get; set; }
         public TypeEvents TypeEvent { get; set; }
         public string UserOwner { get; set; }
@@ -23,6 +26,6 @@ namespace Iatec.Knowledge.Assessment.Entity
     
     public enum TypeEvents 
     {
-        Exclusivo,Compartilhado
+        Exclusive,Shareable
     }
 }

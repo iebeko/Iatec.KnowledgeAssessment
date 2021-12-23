@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IEvent.cs" />
+    <Compile Include="Interfaces\ISchedule.cs" />
+    <Compile Include="Interfaces\IScheduleEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWorks.cs" />
   </ItemGroup>

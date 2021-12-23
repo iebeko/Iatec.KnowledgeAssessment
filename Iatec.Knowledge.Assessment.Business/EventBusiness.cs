@@ -41,14 +41,24 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Insert(Event entity)
         {
-            _eventException.ValidationException(entity);
             
+            if (entity.TypeEvent == TypeEvents.Exclusive) 
+            {
+                var result = _unitOfWork.EventRepository.Get().Where(c => c.TypeEvent == TypeEvents.Exclusive);
+                _eventException.ValidationInsertOverlap(result, entity);
+            }
+            _eventException.ValidationException(entity);
             _unitOfWork.EventRepository.Insert(entity);
             await _unitOfWork.SaveAsync();
         }
 
         public async Task Update(Event entity)
         {
+            if (entity.TypeEvent == TypeEvents.Exclusive)
+            {
+                var EventExclusiveList = _unitOfWork.EventRepository.Get().Where(c => c.TypeEvent == TypeEvents.Exclusive);
+                _eventException.ValidationInsertOverlap(EventExclusiveList, entity);
+            }
             _eventException.ValidationException(entity);
             var result = _unitOfWork.EventRepository.GetById(entity.IdEvent);
             result.Name = entity.Name;
