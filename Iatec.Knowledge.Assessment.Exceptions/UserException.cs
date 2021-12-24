@@ -11,12 +11,12 @@ namespace Iatec.Knowledge.Assessment.Exceptions
     {
         public void UserValidationException(User entity) 
         {
-            if (entity.Name == String.Empty)
+            if (entity.FirstName == String.Empty)
                 throw new Exception("Name must be set");
             if (entity.LastName == String.Empty)
                 throw new Exception("Lastname must be set");
-            if (entity.PhoneNumber == String.Empty)
-                throw new Exception("Phone number is empty");
+            if (entity.Email == String.Empty)
+                throw new Exception("An email account is required");
             
         }
     }

@@ -70,7 +70,17 @@ namespace Iatec.Knowledge.Assessment.Contracts
                 return scheduleRepository;
             }
         }
-
+        public GenericRepository<User> UserRepository 
+        {
+            get 
+            {
+                if (this.userRepository == null) 
+                {
+                    this.userRepository = new GenericRepository<User>(context);
+                }
+                return userRepository;
+            }
+        }
         public void Save() 
         {
             context.SaveChanges();

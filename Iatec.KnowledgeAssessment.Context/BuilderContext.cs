@@ -10,7 +10,7 @@ namespace Iatec.KnowledgeAssessment.Context
 {
     public class BuilderContext:DbContext
     {
-        public BuilderContext() 
+        public BuilderContext() :base("BuilderContext")
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<BuilderContext>());
         }
@@ -19,6 +19,7 @@ namespace Iatec.KnowledgeAssessment.Context
         public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<EventNotification> EventNotifications { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,6 +27,16 @@ namespace Iatec.KnowledgeAssessment.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Roles)
+                .WithMany(r => r.Users)
+                .Map(m =>
+                {
+                    m.ToTable("UserRoles");
+                    m.MapLeftKey("UserId");
+                    m.MapRightKey("RoleId");
+                });
         }
     }
 }

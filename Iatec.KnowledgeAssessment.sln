@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Business", "Iatec.Knowledge.Assessment.Business\Iatec.Knowledge.Assessment.Business.csproj", "{DF38957F-C282-49FA-9417-83E2959E8A55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assesment.Web", "Iatec.Knowledge.Assesment.Web\Iatec.Knowledge.Assesment.Web.csproj", "{4BA35E50-145D-4636-915E-0A5E92DF8800}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DF38957F-C282-49FA-9417-83E2959E8A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF38957F-C282-49FA-9417-83E2959E8A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF38957F-C282-49FA-9417-83E2959E8A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BA35E50-145D-4636-915E-0A5E92DF8800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA35E50-145D-4636-915E-0A5E92DF8800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA35E50-145D-4636-915E-0A5E92DF8800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA35E50-145D-4636-915E-0A5E92DF8800}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
