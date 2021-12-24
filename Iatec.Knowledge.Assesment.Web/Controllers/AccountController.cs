@@ -12,10 +12,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
+
+
+
 
 namespace Iatec.Knowledge.Assesment.Web.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private UserBusiness _userBusiness;
@@ -25,6 +28,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.user = System.Web.HttpContext.Current.User.Identity.Name;
             return View();
         }
 

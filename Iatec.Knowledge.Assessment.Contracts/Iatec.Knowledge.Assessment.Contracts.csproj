@@ -59,6 +59,7 @@
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IEvent.cs" />
     <Compile Include="Interfaces\IEventNotification.cs" />
+    <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\ISchedule.cs" />
     <Compile Include="Interfaces\IScheduleEvent.cs" />
     <Compile Include="Interfaces\IUser.cs" />
@@ -70,9 +71,9 @@
       <Project>{57695883-e300-4c07-93ea-c7db1b6acf52}</Project>
       <Name>Iatec.Knowledge.Assessment.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Iatec.KnowledgeAssessment.Context\Iatec.KnowledgeAssessment.Context.csproj">
+    <ProjectReference Include="..\Iatec.KnowledgeAssessment.Context\Iatec.Knowledge.Assessment.Context.csproj">
       <Project>{48a0d223-90fe-44af-bef5-a3fbffd615bb}</Project>
-      <Name>Iatec.KnowledgeAssessment.Context</Name>
+      <Name>Iatec.Knowledge.Assessment.Context</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

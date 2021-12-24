@@ -28,7 +28,9 @@ namespace Iatec.Knowledge.Assesment.Web.CustomAuthentication
             {
                 return false;
             }
-                var user = userBusiness.Get().Where(c => c.Username == username && c.Password == password && c.IsActive == true).FirstOrDefault();
+                var user = userBusiness.Get().Where(c => c.Username == username && c.Password == password).FirstOrDefault();
+                
+
                 return (user != null) ? true : false;
             
         }
@@ -78,7 +80,8 @@ namespace Iatec.Knowledge.Assesment.Web.CustomAuthentication
             
                 
                 var user = userBusiness.Get().Where(c => c.Email == email).FirstOrDefault();
-                return !string.IsNullOrEmpty(user.Username) ? user.Username : string.Empty;
+            string userName = user != null ? user.Username : string.Empty;
+                return !string.IsNullOrEmpty(userName) ? userName : string.Empty;
             
         }
 

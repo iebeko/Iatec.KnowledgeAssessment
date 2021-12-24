@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Entity", "Iatec.Knowledge.Assessment.Entity\Iatec.Knowledge.Assessment.Entity.csproj", "{57695883-E300-4C07-93EA-C7DB1B6ACF52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.KnowledgeAssessment.Context", "Iatec.KnowledgeAssessment.Context\Iatec.KnowledgeAssessment.Context.csproj", "{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Context", "Iatec.KnowledgeAssessment.Context\Iatec.Knowledge.Assessment.Context.csproj", "{48A0D223-90FE-44AF-BEF5-A3FBFFD615BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Contracts", "Iatec.Knowledge.Assessment.Contracts\Iatec.Knowledge.Assessment.Contracts.csproj", "{A0A4566E-3F84-4458-B222-61F533E68148}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Business", "Iatec.Knowledge.Assessment.Business\Iatec.Knowledge.Assessment.Business.csproj", "{DF38957F-C282-49FA-9417-83E2959E8A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assesment.Web", "Iatec.Knowledge.Assesment.Web\Iatec.Knowledge.Assesment.Web.csproj", "{4BA35E50-145D-4636-915E-0A5E92DF8800}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iatec.Knowledge.Assessment.Web", "Iatec.Knowledge.Assesment.Web\Iatec.Knowledge.Assessment.Web.csproj", "{4BA35E50-145D-4636-915E-0A5E92DF8800}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

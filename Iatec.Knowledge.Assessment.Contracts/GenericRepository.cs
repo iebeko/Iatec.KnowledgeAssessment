@@ -43,7 +43,7 @@ namespace Iatec.Knowledge.Assessment.Contracts
                 return query.ToList();
             }
         }
-
+     
         public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);

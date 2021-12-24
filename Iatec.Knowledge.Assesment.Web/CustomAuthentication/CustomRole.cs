@@ -4,171 +4,104 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using Iatec.KnowledgeAssessment.Context;
 
 namespace Iatec.Knowledge.Assesment.Web.CustomAuthentication
 {
-    public class CustomRole:MembershipProvider
+    public class CustomRole : RoleProvider 
     {
+        
         private UserBusiness _userBusiness;
-        public CustomRole()
-        {
-            _userBusiness = new UserBusiness();
-        }
-
-        public override bool EnablePasswordRetrieval => throw new NotImplementedException();
-
-        public override bool EnablePasswordReset => throw new NotImplementedException();
-
-        public override bool RequiresQuestionAndAnswer => throw new NotImplementedException();
+       
 
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public override int MaxInvalidPasswordAttempts => throw new NotImplementedException();
-
-        public override int PasswordAttemptWindow => throw new NotImplementedException();
-
-        public override bool RequiresUniqueEmail => throw new NotImplementedException();
-
-        public override MembershipPasswordFormat PasswordFormat => throw new NotImplementedException();
-
-        public override int MinRequiredPasswordLength => throw new NotImplementedException();
-
-        public override int MinRequiredNonAlphanumericCharacters => throw new NotImplementedException();
-
-        public override string PasswordStrengthRegularExpression => throw new NotImplementedException();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public override bool ValidateUser(string username, string password)
+        public CustomRole()
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            
+            _userBusiness = new UserBusiness();
+        }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="roleName"></param>
+    /// <returns></returns>
+    public override bool IsUserInRole(string username, string roleName)
+    {
+        var userRoles = GetRolesForUser(username);
+        return userRoles.Contains(roleName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    public override string[] GetRolesForUser(string username)
+    {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                return false;
+                return null;
             }
 
-            
-                //var user = (from us in dbContext.Users
-                //            where string.Compare(username, us.Username, StringComparison.OrdinalIgnoreCase) == 0
-                //            && string.Compare(password, us.Password, StringComparison.OrdinalIgnoreCase) == 0
-                //            && us.IsActive == true
-                //            select us).FirstOrDefault();
+            var userRoles = new string[] { };
 
-                var User = _userBusiness.Get().Where(c => c.Username == username && c.Password == password && c.IsActive == true).FirstOrDefault();
-                return (User != null) ? true : false;
-            
-        }
+            using (BuilderContext dbContext = new BuilderContext())
+            {
+                var selectedUser = (from us in dbContext.Users.Include("Roles")
+                                    where string.Compare(us.Username, username, StringComparison.OrdinalIgnoreCase) == 0
+                                    select us).FirstOrDefault();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="email"></param>
-        /// <param name="passwordQuestion"></param>
-        /// <param name="passwordAnswer"></param>
-        /// <param name="isApproved"></param>
-        /// <param name="providerUserKey"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
-        {
-            throw new NotImplementedException();
-        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="userIsOnline"></param>
-        /// <returns></returns>
-        public override MembershipUser GetUser(string username, bool userIsOnline)
-        {
-            
-                //var user = (from us in dbContext.Users
-                //            where string.Compare(username, us.Username, StringComparison.OrdinalIgnoreCase) == 0
-                //            select us).FirstOrDefault();
-
-                var user = _userBusiness.Get().Where(c => c.Username == username).FirstOrDefault();
-
-                if (user == null)
+                if (selectedUser != null)
                 {
-                    return null;
+                    userRoles = new[] { selectedUser.Roles.Select(r => r.RoleName).ToString() };
                 }
-                var selectedUser = new CustomMembershipUser(user);
 
-                return selectedUser;
-            
+                return userRoles.ToArray();
+            }
+
+
+
         }
 
-        public override string GetUserNameByEmail(string email)
-        {
-            
-                var username = _userBusiness.Get().Where(c => c.Email == email).FirstOrDefault();
-
-                return !string.IsNullOrEmpty(username.Email) ? username.Email : string.Empty;
-            
-        }
-
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        public override void CreateRole(string roleName)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetPassword(string username, string answer)
+        public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        public override bool RoleExists(string roleName)
         {
             throw new NotImplementedException();
         }
 
-        public override string ResetPassword(string username, string answer)
+        public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateUser(MembershipUser user)
+        public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
         }
 
-        public override bool UnlockUser(string userName)
+        public override string[] GetUsersInRole(string roleName)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
+        public override string[] GetAllRoles()
         {
             throw new NotImplementedException();
         }
 
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetNumberOfUsersOnline()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override string[] FindUsersInRole(string roleName, string usernameToMatch)
         {
             throw new NotImplementedException();
         }

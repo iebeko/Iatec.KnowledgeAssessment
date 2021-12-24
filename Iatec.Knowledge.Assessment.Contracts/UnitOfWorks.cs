@@ -21,7 +21,7 @@ namespace Iatec.Knowledge.Assessment.Contracts
         private GenericRepository<ScheduleEvent> scheduleEventRepository;
         private GenericRepository<User> userRepository;
         private GenericRepository<EventNotification> eventNotificationRepository;
-
+        private GenericRepository<Role> roleRepository;
 
 
         public GenericRepository<EventNotification> EventNotificationRepository 
@@ -79,6 +79,17 @@ namespace Iatec.Knowledge.Assessment.Contracts
                     this.userRepository = new GenericRepository<User>(context);
                 }
                 return userRepository;
+            }
+        }
+        public GenericRepository<Role> RoleRepository 
+        {
+            get 
+            {
+                if (this.roleRepository == null) 
+                {
+                    this.roleRepository = new GenericRepository<Role>(context);
+                }
+                return roleRepository;
             }
         }
         public void Save() 
