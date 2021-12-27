@@ -78,7 +78,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Dashboard");
                     }
                 }
             }

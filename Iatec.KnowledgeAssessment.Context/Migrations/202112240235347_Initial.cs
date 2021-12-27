@@ -22,7 +22,7 @@
                 "dbo.Event",
                 c => new
                     {
-                        IdEvent = c.Guid(nullable: false),
+                        IdEvent = c.Int(nullable: false, identity:true),
                         Name = c.String(),
                         Description = c.String(),
                         Date = c.DateTime(nullable: false),

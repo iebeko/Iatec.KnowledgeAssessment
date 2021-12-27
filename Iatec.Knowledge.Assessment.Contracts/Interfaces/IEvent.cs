@@ -1,4 +1,5 @@
 ﻿using Iatec.Knowledge.Assessment.Entity;
+using Iatec.Knowledge.Assessment.Entity.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Iatec.Knowledge.Assessment.Contracts.Interfaces
         Task Insert(Event entity);
         Task Delete(int id);
         Event GetById(int id);
-        IEnumerable<Event> Get();
+        IEnumerable<Event> Get(EventFilters filter);
         Task Update(Event entity);
     }
 }

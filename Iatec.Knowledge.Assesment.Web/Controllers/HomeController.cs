@@ -14,5 +14,9 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
 
             return View();
         }
+        public ActionResult Events() 
+        {
+            return View();
+        }
     }
 }

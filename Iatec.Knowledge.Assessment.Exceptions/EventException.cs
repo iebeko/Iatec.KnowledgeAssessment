@@ -19,7 +19,10 @@ namespace Iatec.Knowledge.Assessment.Exceptions
                 throw new Exception("Decription must be set");
             if (entity.Place == String.Empty)
                 throw new Exception("Place must be set");
-            
+            if (entity.Date <= DateTime.Now)
+                throw new Exception("The date can´t be an older date.");
+            if (entity.Participants == 0)
+                throw new Exception("Participants must be greater than 0");
         }
 
         public void ValidationInsertOverlap(IEnumerable<Event> list, Event entity) 

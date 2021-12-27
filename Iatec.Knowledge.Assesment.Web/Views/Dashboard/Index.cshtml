@@ -1,0 +1,335 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string UserName = ViewBag.UserName;
+}
+
+<h2>Welcome! @UserName</h2>
+
+
+<div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="EventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EventModalLabel">Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="IdEvent" />
+                    <input type="hidden" id="UserOwner" value="@UserName"/>
+                    <div class="form-group">
+                        <label for="Name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control col-6" id="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="Description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Date" class="col-form-label">Date</label>
+                        <input type="text" class="datepicker form-control" id="Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="Place" class="col-form-label">Place</label>
+                        <input type="text" class="form-control" id="Place">
+                    </div>
+                    <div class="form-group">
+                        <label for="Type">Category</label>
+                        <select id="TypeEvent" class="form-control">
+                            <option value="1">Exclusive</option>
+                            <option value="2">Sharable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Participantes</label>
+                        <input type="number" class="form-control" id="Participants"/>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveAndUpdate();" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EventFilter" tabindex="-1" role="dialog" aria-labelledby="EventFilterLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EventFilterLabel"> <i class="fa fa-filter" aria-hidden="true"></i>Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="IdEvent" />
+                    <input type="hidden" id="UserOwner" value="@UserName" />
+                    <div class="form-group">
+                        <label for="Year" class="col-form-label">Year:</label>
+                        <input type="number" class="form-control col-6" id="Year">
+                    </div>
+                    <div class="form-group">
+                        <label for="Month" class="col-form-label">Month:</label>
+                        <input type="number" class="form-control" id="Month">
+                    </div>
+                    <div class="form-group">
+                        <label for="Days" class="col-form-label">Day</label>
+                        <input type="number" class="form-control" id="Day">
+                    </div>
+                    <div class="form-group">
+                        <label for="DateFilter" class="col-form-label">Day</label>
+                        <input type="Date" class="form-control" id="DateFilter">
+                    </div>
+                    <div class="form-group">
+                        <label for="Place" class="col-form-label">Place</label>
+                        <input type="text" class="form-control" id="PlaceFilter">
+                    </div>
+                    <div class="form-group">
+                        <label for="Type">Category</label>
+                        <select id="TypeEvent" class="form-control">
+                            <option value="1">Exclusive</option>
+                            <option value="2">Sharable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Participants</label>
+                        <input type="number" class="form-control" id="ParticipantsFilter" />
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card border-left">
+    <div class="card-header bg-primary">
+        
+        <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">New Event
+            <i class="fa fa-plus"></i>
+        </button>
+        <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter">Filter
+        <i class="fa fa-search 2x"></i>
+        </button>
+    </div>
+    <div class="card-body">
+
+        <div class="row row-cols-1 row-cols-md-3 carditem">
+
+            
+
+
+        </div>
+
+      
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+   $(document).ready(function () {
+
+       $(".datepicker").datepicker();
+       $(".datepicker").datepicker("setDate", new Date("getate()"));
+       LoadEvents();
+
+       //document.getElementById("Date").valueAsDate = new Date();
+
+
+   });
+    function LoadEvents() {
+       
+        $.ajax({
+            url: '/Api/Events/',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                UserOwner: $("#UserName").val(),
+                Year: $('#Year').val(),
+                Month: $('#Month').val(),
+                Day: $('#Days').val(),
+                Date: $('#DateFilter').val(),
+                Place: $('#PlaceFilter').val(),
+                Participants: $('#Participants').val()
+            },
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var html = '';
+                
+                $.each(result.Data, function (key, item) {
+                    html += '<div class="col mb-4">';
+                    html += '<div class="card h-100">';
+                    html += '<svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>';
+                    html += '<div class="card-body">';
+                    html += '<h4 class="card-title">' + item.Name + '</h4>';
+                    html += '<p class="card-text">' + item.Description + '</p><br/>';
+                    html += '<p><b>Date:</b>   ' + item.Date + '</p></br>';
+                    html += '<p><b>Place:</b>   ' +  item.Place +'</p></br>';
+                    html += '<p><b>Participants:</b>   ' + item.Participants; +'</p></br>';
+                    html += '<hr/>';
+                    html += '<button class="btn btn-info float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-pencil"></i></button >';
+                    html += '<button class="btn btn-danger float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-trash"></i></button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                })
+                
+                $('.carditem').html(html);
+            }
+        });
+    }
+    function FilterLoad() {
+        ClearFilter();
+        $('#EventFilter').modal('hide');
+       
+        LoadEvents();
+    }
+    function SaveAndUpdate()
+    {
+        var data  = {
+            IdEvent: $('#IdEvent').val(),
+            Name: $('#Name').val(),
+            Description: $('#Description').val(),
+            Date: $('#Date').val(),
+            Place: $('#Place').val(),
+            TypeEvent: $('#TypeEvent').val(),
+            Participants: $('#Participants').val(),
+        }
+        $.ajax({
+            url: "/Api/Events",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#EventModal').modal('hide');
+                if (result.Status === true) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your event has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: Result.Message,
+                    })
+                }
+                LoadEvents();
+            }
+        });
+    }
+    function GetByID(Id)
+    {
+        var id = Id;
+        $.ajax({
+            url: '/Api/Events/' + id,
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result)
+            {
+                $('#EventModal').modal('show');
+                $('#IdEvent').val(result.Data.IdEvent);
+                $('#Name').val(result.Data.Name);
+                $('#Description').val(result.Data.Description);
+                $('#Date').val(result.Data.Date);
+                $('.TypeEvent option[value=' + result.Data.TypeEvent + ']').attr('selected', 'selected');
+                $('#Place').val(result.Data.Place);
+                $('#Participants').val(result.Data.Participants);
+            }
+        });
+
+
+    }
+    function Delete(Id)
+    {
+        $.ajax({
+            url: '/Api/Event/' + Id,
+            type: 'DELETE',
+            dataType: 'json',
+            cache: 'false',
+            success: function (result) {
+                if (result.Status === true) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your event has been deleted',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: Result.Message,
+
+                    })
+                }
+            }
+        });
+    }
+    function ClearFunction()
+    {
+        $('#IdEvent').val();
+        $('#Name').val();
+        $('#Description').val();
+        $('#DateFilter').val();
+        $('.TypeEvent option[value=' + 1 + ']').attr('selected', 'selected');
+        $('#Place').val();
+        $('#Participants').val();
+
+        $()
+    }
+    function ClearFilter()
+    {
+
+        $('#Year').val();
+        $('#Month').val();
+        $('#Day').val();
+        $('#DateFilter').val();
+        
+        $('#PlaceFilter').val();
+        $('#ParticipantsFilter').val();
+
+    }
+    function getFormattedDate(dateFromDB) {
+        alert(dateFromDB);
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = mm + '/' + dd + '/' + yyyy;
+
+        $('#Date').attr('value', today);
+
+        alert($('#Date').attr('value'));
+    }
+</script>

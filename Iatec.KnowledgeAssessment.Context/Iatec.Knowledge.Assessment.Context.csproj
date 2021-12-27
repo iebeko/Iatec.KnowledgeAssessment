@@ -56,6 +56,10 @@
     <Compile Include="Migrations\202112240235347_Initial.designer.cs">
       <DependentUpon>202112240235347_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112270114225_IdEventChange.cs" />
+    <Compile Include="Migrations\202112270114225_IdEventChange.designer.cs">
+      <DependentUpon>202112270114225_IdEventChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202112240235347_Initial.resx">
       <DependentUpon>202112240235347_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112270114225_IdEventChange.resx">
+      <DependentUpon>202112270114225_IdEventChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

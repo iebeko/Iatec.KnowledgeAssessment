@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Iatec.Knowledge.Assessment.Contracts;
 using Iatec.Knowledge.Assessment.Contracts.Interfaces;
 using Iatec.Knowledge.Assessment.Entity;
+using Iatec.Knowledge.Assessment.Entity.Filters;
 using Iatec.Knowledge.Assessment.Exceptions;
 
 namespace Iatec.Knowledge.Assessment.Business
@@ -29,9 +30,22 @@ namespace Iatec.Knowledge.Assessment.Business
 
         }
 
-        public IEnumerable<Event> Get()
+        public IEnumerable<Event> Get(EventFilters filter)
         {
-            return _unitOfWork.EventRepository.Get();
+            var EventList =  _unitOfWork.EventRepository.Get();
+            if (filter.UserOwner != null)
+                EventList = EventList.Where(c => c.UserOwner == filter.UserOwner);
+            if (filter.Date.HasValue == true)
+                EventList = EventList.Where(c => c.Year == filter.Year);
+            if (filter.Place != null)
+                EventList = EventList.Where(c => c.Place.Contains(filter.Place));
+            if (filter.Month > 0)
+                EventList = EventList.Where(c => c.Month == filter.Month);
+            if (filter.Day > 0)
+                EventList = EventList.Where(c =>c.Days == filter.Day);
+            if (filter.IsSharable == false)
+                EventList = EventList.Where(c => c.TypeEvent == TypeEvents.Exclusive);
+            return EventList.ToList();
         }
 
         public Event GetById(int id)
@@ -41,7 +55,9 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Insert(Event entity)
         {
-            
+            entity.Year = entity.Date.Year;
+            entity.Month = entity.Date.Month;
+            entity.Days = entity.Date.Day;
             if (entity.TypeEvent == TypeEvents.Exclusive) 
             {
                 var result = _unitOfWork.EventRepository.Get().Where(c => c.TypeEvent == TypeEvents.Exclusive);

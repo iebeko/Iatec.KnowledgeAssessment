@@ -10,7 +10,7 @@ namespace Iatec.Knowledge.Assessment.Entity
     public class Event
     {
         [Key]
-        public Guid IdEvent { get; set; }
+        public int IdEvent { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
@@ -20,12 +20,13 @@ namespace Iatec.Knowledge.Assessment.Entity
         public string Place { get; set; }
         public TypeEvents TypeEvent { get; set; }
         public string UserOwner { get; set; }
+        public int Participants { get; set; }
         public bool IsDeleted { get; set; }
         public bool  IsShareable { get; set; }
     }
     
     public enum TypeEvents 
     {
-        Exclusive,Shareable
+        Exclusive=1,Shareable=2
     }
 }
