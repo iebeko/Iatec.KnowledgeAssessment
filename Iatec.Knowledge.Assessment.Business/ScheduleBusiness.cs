@@ -30,7 +30,7 @@ namespace Iatec.Knowledge.Assessment.Business
         {
             return unitOfWork.ScheduleRepository.Get();
         }
-
+        
         public Schedule GetById(int id)
         {
             return unitOfWork.ScheduleRepository.GetById(id);

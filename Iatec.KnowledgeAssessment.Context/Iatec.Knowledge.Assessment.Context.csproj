@@ -60,6 +60,14 @@
     <Compile Include="Migrations\202112270114225_IdEventChange.designer.cs">
       <DependentUpon>202112270114225_IdEventChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112272004449_ScheduleEventChanges.cs" />
+    <Compile Include="Migrations\202112272004449_ScheduleEventChanges.designer.cs">
+      <DependentUpon>202112272004449_ScheduleEventChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112272025197_ScheduleEventChanges1.cs" />
+    <Compile Include="Migrations\202112272025197_ScheduleEventChanges1.designer.cs">
+      <DependentUpon>202112272025197_ScheduleEventChanges1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,6 +87,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112270114225_IdEventChange.resx">
       <DependentUpon>202112270114225_IdEventChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112272004449_ScheduleEventChanges.resx">
+      <DependentUpon>202112272004449_ScheduleEventChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112272025197_ScheduleEventChanges1.resx">
+      <DependentUpon>202112272025197_ScheduleEventChanges1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

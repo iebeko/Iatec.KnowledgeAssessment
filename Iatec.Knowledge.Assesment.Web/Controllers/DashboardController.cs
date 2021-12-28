@@ -14,5 +14,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             ViewBag.UserName = User.Identity.Name;
             return View();
         }
+        
     }
 }

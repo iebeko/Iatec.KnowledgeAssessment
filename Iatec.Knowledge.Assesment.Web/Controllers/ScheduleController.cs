@@ -1,8 +1,7 @@
-﻿
+﻿using Iatec.Knowledge.Assesment.Web.CustomAuthentication;
 using Iatec.Knowledge.Assesment.Web.Responses;
 using Iatec.Knowledge.Assessment.Business;
 using Iatec.Knowledge.Assessment.Entity;
-using Iatec.Knowledge.Assessment.Entity.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,28 +14,30 @@ using System.Web.Http.Results;
 
 namespace Iatec.Knowledge.Assesment.Web.Controllers
 {
-
-    public class EventsController : ApiController
+    public class ScheduleController : ApiController
     {
-        private EventBusiness _eventBusiness;
-
-        public EventsController()
+        private ScheduleBusiness _scheduleBusiness;
+        public ScheduleController()
         {
-            _eventBusiness = new EventBusiness();
+            _scheduleBusiness = new ScheduleBusiness();
         }
-        // GET: Events
-      
-        
-        public JsonResult<ApiResponse<IEnumerable<Event>>> Get([FromUri] EventFilters entity)
+        // GET: Schedule
+        public JsonResult<ApiResponse<IEnumerable<Schedule>>> Index()
         {
-            var response = new ApiResponse<IEnumerable<Event>>();
+            
+            var response = new ApiResponse<IEnumerable<Schedule>>();
             try
             {
+                if (User.Identity.IsAuthenticated) 
+                {
+                    var identity = ((CustomPrincipal)HttpContext.Current.User);
+                    var ScheduleList = _scheduleBusiness.Get();
+                    response.Data = ScheduleList;
+                    response.Status = ScheduleList.Count() > 0 ? true : false;
+                    response.Message = ScheduleList.Count() > 0 ? String.Empty : "No events have been added, Add one :)";
+                }
                
-                var eventList = _eventBusiness.Get(entity).Where(c => c.IsDeleted == false);
-                response.Data = eventList;
-                response.Status = eventList.Count() > 0 ? true : false;
-                response.Message = eventList.Count() > 0 ? String.Empty : "No events have been added, Add one :)";
+               
             }
             catch (Exception ex)
             {
@@ -46,15 +47,14 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             return Json(response);
         }
 
-       
         // GET api/values/5
-        public IHttpActionResult  Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            var response = new ApiResponse<Event>();
+            var response = new ApiResponse<Schedule>();
 
             try
             {
-                var result = _eventBusiness.GetById(id);
+                var result = _scheduleBusiness.GetById(id);
                 response.Data = result;
                 response.Status = true;
             }
@@ -69,34 +69,33 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             return Json(response);
         }
 
-
         [HttpPost]
         // POST api/values
         [ResponseType(typeof(Event))]
-        public async Task<IHttpActionResult> PostEvent(Event entity)
+        public async Task<IHttpActionResult> PostEvent(Schedule entity)
         {
-            var response = new ApiResponse<Event>();
+            var response = new ApiResponse<Schedule>();
             try
             {
-                if (entity.IdEvent == 0)
+                if (entity.IdSchedule == 0)
                 {
                     if (User.Identity.IsAuthenticated == true)
                     {
-                        entity.UserOwner = User.Identity.Name;
-                        await _eventBusiness.Insert(entity);
-                        
+                        var identity = ((CustomPrincipal)HttpContext.Current.User);
+                        entity.IdUser = identity.UserId;
+                        await _scheduleBusiness.Insert(entity);
+                        response.Status = true;
                     }
                     else
                     {
                         throw new Exception("User must be authenticated");
                     }
                 }
-                else 
+                else
                 {
-                    await _eventBusiness.Update(entity);
-                    
+                    await _scheduleBusiness.Update(entity);
                 }
-                response.Status = true;
+
             }
             catch (Exception ex)
             {
@@ -107,20 +106,19 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
 
             return Ok(response);
         }
-
         [HttpPut]
         // PUT api/values/5
         [ResponseType(typeof(ApiResponse<Event>))]
-        public async Task<IHttpActionResult> PutEvent(int id, Event entity)
+        public async Task<IHttpActionResult> PutSchedule(int id, Schedule entity)
         {
             var response = new ApiResponse<Event>();
-            try 
+            try
             {
-                await _eventBusiness.Update(entity);
+                await _scheduleBusiness.Update(entity);
                 response.Status = true;
-                
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = ex.Message;
@@ -132,14 +130,14 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var Event = _eventBusiness.GetById(id);
-            if (Event.IdEvent == 0)
+            var Event = _scheduleBusiness.GetById(id);
+            if (Event.IdSchedule == 0)
             {
                 return BadRequest();
             }
-            else 
+            else
             {
-                await _eventBusiness.Delete(id);
+                await _scheduleBusiness.Delete(id);
             }
             return Ok(Event);
         }

@@ -53,8 +53,8 @@ namespace Iatec.Knowledge.Assessment.Business
             scheduleEvent.Month = entity.Month;
             scheduleEvent.Year = entity.Year;
             scheduleEvent.MonthName = entity.MonthName;
-            scheduleEvent.NameEvent = entity.NameEvent;
-            scheduleEvent.DateEvent = entity.DateEvent;
+            scheduleEvent.Name = entity.Name;
+            scheduleEvent.Date = entity.Date;
            
             unitOfWork.ScheduleEventRepository.Update(entity);
             await unitOfWork.SaveAsync();

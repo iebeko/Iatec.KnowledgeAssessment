@@ -33,12 +33,16 @@ namespace Iatec.Knowledge.Assessment.Business
         public IEnumerable<Event> Get(EventFilters filter)
         {
             var EventList =  _unitOfWork.EventRepository.Get();
+            if (filter.Name != null)
+                EventList = EventList.Where(c => c.Name.Contains(filter.Name));
             if (filter.UserOwner != null)
                 EventList = EventList.Where(c => c.UserOwner == filter.UserOwner);
             if (filter.Date.HasValue == true)
                 EventList = EventList.Where(c => c.Year == filter.Year);
             if (filter.Place != null)
                 EventList = EventList.Where(c => c.Place.Contains(filter.Place));
+            if (filter.Year > 0)
+                EventList = EventList.Where(c => c.Year == filter.Year);
             if (filter.Month > 0)
                 EventList = EventList.Where(c => c.Month == filter.Month);
             if (filter.Day > 0)
@@ -70,19 +74,24 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Update(Event entity)
         {
+            var result = _unitOfWork.EventRepository.GetById(entity.IdEvent);
+            entity.Year = result.Date.Year;
+            entity.Month = result.Date.Month;
+            entity.Days = result.Date.Day;
             if (entity.TypeEvent == TypeEvents.Exclusive)
             {
                 var EventExclusiveList = _unitOfWork.EventRepository.Get().Where(c => c.TypeEvent == TypeEvents.Exclusive);
                 _eventException.ValidationInsertOverlap(EventExclusiveList, entity);
             }
             _eventException.ValidationException(entity);
-            var result = _unitOfWork.EventRepository.GetById(entity.IdEvent);
+           
             result.Name = entity.Name;
             result.Place = entity.Place;
             result.TypeEvent = entity.TypeEvent;
             result.UserOwner = entity.UserOwner;
             result.IsShareable = entity.IsShareable;
             result.IsDeleted = entity.IsDeleted;
+            result.Date = entity.Date;
             _unitOfWork.EventRepository.Update(result);
             await _unitOfWork.SaveAsync();
         }

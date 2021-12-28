@@ -16,27 +16,30 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-    <nav class="navbar navbar-dark bg-transparent">
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
         <a class="navbar-brand" href="#">
-            <img src="~/image/logo.png" width="100" height="50" class="d-inline-block align-top" alt="">
+            <object data="~/image/logo.svg" width="50" height="50"> </object>
 
         </a>
         <span style="float:right; font-size:small">
             @if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 var identity = ((CustomPrincipal)HttpContext.Current.User);
+                
                 @Html.Label(string.Format("Welcome {0} {1}", identity.FirstName, identity.LastName))
                 @Html.ActionLink("Log out", "LogOut", "Account")
             }
         </span>
     </nav>
 
+   
+
 
     <div id="header_container">
         <div id="header">
 
-           
+
         </div>
     </div>
 

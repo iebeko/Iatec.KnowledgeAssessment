@@ -8,8 +8,9 @@ namespace Iatec.Knowledge.Assessment.Entity.Filters
 {
    public class EventFilters
     {
-        
-            public string UserOwner { get; set; }
+
+        public string Name { get; set; }
+        public string UserOwner { get; set; }
             public bool? IsSharable { get; set; }
             public DateTime? Date { get; set; }
             public string Place { get; set; }

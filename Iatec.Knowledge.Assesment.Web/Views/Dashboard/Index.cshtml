@@ -7,7 +7,7 @@
 
 <h2>Welcome! @UserName</h2>
 
-
+@*MODAL WINDOW TO POST AND UPDATE AN EVENT*@
 <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="EventModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,7 +20,7 @@
             <div class="modal-body">
                 <form>
                     <input type="hidden" id="IdEvent" />
-                    <input type="hidden" id="UserOwner" value="@UserName"/>
+                    <input type="hidden" id="UserOwner" value="@UserName" />
                     <div class="form-group">
                         <label for="Name" class="col-form-label">Name:</label>
                         <input type="text" class="form-control col-6" id="Name">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Participantes</label>
-                        <input type="number" class="form-control" id="Participants"/>
+                        <input type="number" class="form-control" id="Participants" />
                     </div>
                 </form>
             </div>
@@ -56,12 +56,12 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="SaveAndUpdate();" class="btn btn-primary">Send message</button>
+                <button type="button" onclick="SaveAndUpdate();" class="btn btn-primary">Savex</button>
             </div>
         </div>
     </div>
 </div>
-
+@*MODAL WINDOW FOR FILTER POURPOSE*@
 <div class="modal fade" id="EventFilter" tabindex="-1" role="dialog" aria-labelledby="EventFilterLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -95,13 +95,7 @@
                         <label for="Place" class="col-form-label">Place</label>
                         <input type="text" class="form-control" id="PlaceFilter">
                     </div>
-                    <div class="form-group">
-                        <label for="Type">Category</label>
-                        <select id="TypeEvent" class="form-control">
-                            <option value="1">Exclusive</option>
-                            <option value="2">Sharable</option>
-                        </select>
-                    </div>
+                  
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Participants</label>
                         <input type="number" class="form-control" id="ParticipantsFilter" />
@@ -114,51 +108,200 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Send message</button>
+                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*MODAL WINDOW FOR CREATE A NEW SCHEDULE*@
+<div class="modal fade" id="SheduleModal" tabindex="-1" role="dialog" aria-labelledby="SheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="SheduleModalLabel"> <i class="fa fa-calendar" aria-hidden="true"></i>Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="IdSchedule" />
+                    
+
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Schedule Name</label>
+                        <input type="text" class="form-control" id="Schedule" />
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*PANELS*@
+<div class="row">
+    <!-- Events -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Events</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <label id="Total Events"></label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Calendars -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Today Events</div>
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                            <label id="discount"></label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exclusive Events -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Exclusives</div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                    <label id="payment"></label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm mr-2">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Invitations -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Invitations</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-<div class="card border-left">
-    <div class="card-header bg-primary">
-        
-        <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">New Event
-            <i class="fa fa-plus"></i>
-        </button>
-        <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter">Filter
-        <i class="fa fa-search 2x"></i>
-        </button>
-    </div>
-    <div class="card-body">
 
-        <div class="row row-cols-1 row-cols-md-3 carditem">
+<div class="row">
+    <div class="col-7">
+        <div class="card border-left">
+            <div class="card-header bg-primary">
 
-            
+                <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">
+                    New Event
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter">
+                    Filter
+                    <i class="fa fa-search 2x"></i>
+                </button>
+                <button type="button" class="btn btn-warning float-lg-right" data-toggle="modal" data-target="#SheduleModal">
+                    Calendar
+                    <i class="fa fa-plus 2x"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <h4>My Events</h4>
+                <div class="row row-cols-1 row-cols-md-4 carditem">
+
+                </div>
 
 
+            </div>
         </div>
-
-      
     </div>
+    <div class="col-5">
+        <div class="card bg-light">
+            <div class="card-header">
+                <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">
+                    New Event
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter">
+                    Filter
+                    <i class="fa fa-search 2x"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <h4>My Events</h4>
+                <div class="row row-cols-1 row-cols-md-4 carditem">
+
+                </div>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 <script type="text/javascript">
 
 
-   $(document).ready(function () {
+    $(document).ready(function () {
 
-       $(".datepicker").datepicker();
-       $(".datepicker").datepicker("setDate", new Date("getate()"));
-       LoadEvents();
+        $(".datepicker").datepicker();
+        $(".datepicker").datepicker("setDate", new Date("getate()"));
+        LoadEvents();
 
-       //document.getElementById("Date").valueAsDate = new Date();
+        //document.getElementById("Date").valueAsDate = new Date();
 
 
-   });
+    });
     function LoadEvents() {
-       
+
         $.ajax({
             url: '/Api/Events/',
             type: 'GET',
@@ -175,16 +318,19 @@
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 var html = '';
-                
+                let TypeEvent = ['Exclusive', 'Shareable'];
                 $.each(result.Data, function (key, item) {
-                    html += '<div class="col mb-4">';
+                    html += '<div class="col mb-3">';
                     html += '<div class="card h-100">';
                     html += '<svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>';
                     html += '<div class="card-body">';
                     html += '<h4 class="card-title">' + item.Name + '</h4>';
+                    html += '<span><b>Created by:</b>   ' + item.UserOwner + '</span></br>';
+
                     html += '<p class="card-text">' + item.Description + '</p><br/>';
+                    html += '<p><b>Type:</b>   ' + TypeEvent[item.TypeEvent - 1] + '</p></br>';
                     html += '<p><b>Date:</b>   ' + item.Date + '</p></br>';
-                    html += '<p><b>Place:</b>   ' +  item.Place +'</p></br>';
+                    html += '<p><b>Place:</b>   ' + item.Place + '</p></br>';
                     html += '<p><b>Participants:</b>   ' + item.Participants; +'</p></br>';
                     html += '<hr/>';
                     html += '<button class="btn btn-info float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-pencil"></i></button >';
@@ -193,7 +339,7 @@
                     html += '</div>';
                     html += '</div>';
                 })
-                
+
                 $('.carditem').html(html);
             }
         });
@@ -201,12 +347,11 @@
     function FilterLoad() {
         ClearFilter();
         $('#EventFilter').modal('hide');
-       
+
         LoadEvents();
     }
-    function SaveAndUpdate()
-    {
-        var data  = {
+    function SaveAndUpdate() {
+        var data = {
             IdEvent: $('#IdEvent').val(),
             Name: $('#Name').val(),
             Description: $('#Description').val(),
@@ -222,7 +367,7 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                $('#EventModal').modal('hide');
+
                 if (result.Status === true) {
                     Swal.fire({
                         position: 'top-end',
@@ -231,35 +376,36 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    
+                    $('#EventModal').modal('hide');
+                    LoadEvents();
                 }
                 else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: Result.Message,
+                        text: result.Message,
                     })
                 }
-                LoadEvents();
+
             }
+
         });
     }
-    function GetByID(Id)
-    {
+    function GetByID(Id) {
         var id = Id;
         $.ajax({
             url: '/Api/Events/' + id,
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: function (result)
-            {
+            success: function (result) {
                 $('#EventModal').modal('show');
                 $('#IdEvent').val(result.Data.IdEvent);
+
                 $('#Name').val(result.Data.Name);
                 $('#Description').val(result.Data.Description);
                 $('#Date').val(result.Data.Date);
-                $('.TypeEvent option[value=' + result.Data.TypeEvent + ']').attr('selected', 'selected');
+                $('#TypeEvent option[value=' + result.Data.TypeEvent + ']').attr('selected', 'selected');
                 $('#Place').val(result.Data.Place);
                 $('#Participants').val(result.Data.Participants);
             }
@@ -267,8 +413,7 @@
 
 
     }
-    function Delete(Id)
-    {
+    function Delete(Id) {
         $.ajax({
             url: '/Api/Event/' + Id,
             type: 'DELETE',
@@ -295,8 +440,7 @@
             }
         });
     }
-    function ClearFunction()
-    {
+    function ClearFunction() {
         $('#IdEvent').val();
         $('#Name').val();
         $('#Description').val();
@@ -307,14 +451,13 @@
 
         $()
     }
-    function ClearFilter()
-    {
+    function ClearFilter() {
 
         $('#Year').val();
         $('#Month').val();
         $('#Day').val();
         $('#DateFilter').val();
-        
+
         $('#PlaceFilter').val();
         $('#ParticipantsFilter').val();
 
@@ -332,4 +475,51 @@
 
         alert($('#Date').attr('value'));
     }
+
+
+    /*SCHEDULE FUNCTIONS*/
+    function SaveAndUpdateSchedule()
+    {
+        var data = {
+            IdSchedule: $('#IdEvent').val(),
+            NameSchedule: $('#NameSchedule').val(),
+            
+        }
+        $.ajax({
+            url: "/Api/Schedule",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.Status === true) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your event has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $('#EventModal').modal('hide');
+                    LoadEvents();
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: result.Message,
+                    })
+                }
+
+            }
+
+        });
+    }
+    function LoadSchedule()
+    {
+        
+    }
+
+
 </script>
