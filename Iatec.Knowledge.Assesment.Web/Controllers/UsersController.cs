@@ -19,30 +19,14 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             _userBusiness = new UserBusiness();
         }
 
-        public JsonResult<ApiResponse<IEnumerable<User>>> Get()
+        public IHttpActionResult Get(string term)
         {
 
-            var response = new ApiResponse<IEnumerable<User>>();
-            try
-            {
-                if (User.Identity.IsAuthenticated)
-                {
-                    var identity = User.Identity.Name;
-
-                    var userList =_userBusiness.Get();
-                    response.Data = userList;
-                    response.Status = userList.Count() > 0 ? true : false;
-                    response.Message = userList.Count() > 0 ? String.Empty : "No events have been added, Add one :)";
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                response.Status = false;
-                response.Message = ex.Message;
-            }
-            return Json(response);
+           
+           
+                    var userList =_userBusiness.Get().Where(c =>c.Username.Contains(term)).Select(a => new { label = a.FirstName.ToUpper() +" "+a.LastName.ToUpper(), value = a.IdUser});
+                  
+            return Json(userList);
         }
     }
 }
