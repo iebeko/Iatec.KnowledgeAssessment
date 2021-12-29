@@ -8,6 +8,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
 {
     public class DashboardController : Controller
     {
+        [Authorize]
         // GET: Dashboard
         public ActionResult Index()
         {

@@ -51,7 +51,7 @@ namespace Iatec.Knowledge.Assessment.Business
                 EventList = EventList.Where(c => c.TypeEvent == TypeEvents.Exclusive);
             return EventList.ToList();
         }
-
+       
         public Event GetById(int id)
         {
             return _unitOfWork.EventRepository.GetById(id);

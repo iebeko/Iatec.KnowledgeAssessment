@@ -29,12 +29,18 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         
         public JsonResult<ApiResponse<IEnumerable<Event>>> Get([FromUri] EventFilters entity)
         {
+            
             var response = new ApiResponse<IEnumerable<Event>>();
             try
             {
-               
                 var eventList = _eventBusiness.Get(entity).Where(c => c.IsDeleted == false);
-                response.Data = eventList;
+                if (entity.UserOwner == null)
+                {
+                    var identity = User.Identity.Name;
+                    eventList = eventList.Where(c => c.UserOwner != identity && c.TypeEvent == TypeEvents.Shareable);
+                }
+                
+                response.Data = eventList.OrderByDescending(c => c.Date);
                 response.Status = eventList.Count() > 0 ? true : false;
                 response.Message = eventList.Count() > 0 ? String.Empty : "No events have been added, Add one :)";
             }
@@ -45,7 +51,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             }
             return Json(response);
         }
-
        
         // GET api/values/5
         public IHttpActionResult  Get(int id)
@@ -128,20 +133,34 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
             return Json(response);
         }
 
+        [HttpDelete]
         // DELETE api/values/5
-        [ResponseType(typeof(Event))]
+        [ResponseType(typeof(ApiResponse<Event>))]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var Event = _eventBusiness.GetById(id);
-            if (Event.IdEvent == 0)
+            var response = new ApiResponse<Event>();
+            try 
             {
-                return BadRequest();
+                if (id > 0)
+                {
+                    var Event = _eventBusiness.GetById(id);
+                    Event.IsDeleted = true;
+                    await _eventBusiness.Update(Event);
+                    response.Status = true;
+                }
+                else 
+                {
+                    response.Status = false;
+                    response.Message = "Bad request por this action ";
+                }
+                
             }
-            else 
+            catch (Exception ex) 
             {
-                await _eventBusiness.Delete(id);
+                response.Status = false;
+                response.Message = ex.Message;
             }
-            return Ok(Event);
+            return Json(response);
         }
     }
 }

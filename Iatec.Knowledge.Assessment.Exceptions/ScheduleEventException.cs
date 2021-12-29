@@ -11,7 +11,7 @@ namespace Iatec.Knowledge.Assessment.Exceptions
     {
         public void ScheduleEventValidationException(ScheduleEvent entity) 
         {
-            if (entity.Month > 0)
+            if (entity.Month == 0)
                 throw new Exception("Month should be set");
             if (entity.MonthName == String.Empty)
                 throw new Exception("Month should be set");

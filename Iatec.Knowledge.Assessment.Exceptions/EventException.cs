@@ -27,7 +27,7 @@ namespace Iatec.Knowledge.Assessment.Exceptions
 
         public void ValidationInsertOverlap(IEnumerable<Event> list, Event entity) 
         {
-            var result = list.Where(c => c.Year == entity.Year && c.Month == entity.Month && c.Days == entity.Days);
+            var result = list.Where(c => c.Year == entity.Year && c.Month == entity.Month && c.Days == entity.Days && c.UserOwner == entity.UserOwner);
             if (result.Count() > 0)
                 throw new Exception("Exclusive events occurs this date, please choose a different date");
         }

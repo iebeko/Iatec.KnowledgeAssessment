@@ -66,7 +66,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="EventFilterLabel"> <i class="fa fa-filter" aria-hidden="true"></i>Filter</h5>
+                <h5 class="modal-title" id="EventFilterLabel"> <i class="fa fa-filter" aria-hidden="true"></i>Filter my events</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -74,6 +74,7 @@
             <div class="modal-body">
                 <form>
                     <input type="hidden" id="IdEvent" />
+                    <input type="hidden" id="TypeFilter" value=""/>
                     <input type="hidden" id="UserOwner" value="@UserName" />
                     <div class="form-group">
                         <label for="Year" class="col-form-label">Year:</label>
@@ -95,20 +96,24 @@
                         <label for="Place" class="col-form-label">Place</label>
                         <input type="text" class="form-control" id="PlaceFilter">
                     </div>
-                  
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Type</label>
+                        <select class="form-control" id="TypeEventFilter">
+                            <option value="1">Exclusive</option>
+                            <option value="2">Shareable</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Participants</label>
                         <input type="number" class="form-control" id="ParticipantsFilter" />
                     </div>
                 </form>
             </div>
-
-
-
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Save</button>
+                <button type="button" onclick="FilterLoad();" class="btn btn-primary">
+                <i class="fa fa-search"></i>
+                Search</button>
             </div>
         </div>
     </div>
@@ -130,7 +135,7 @@
 
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Schedule Name</label>
-                        <input type="text" class="form-control" id="Schedule" />
+                        <input type="text" class="form-control" id="NameSchedule" />
                     </div>
                 </form>
             </div>
@@ -140,11 +145,82 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="FilterLoad();" class="btn btn-primary">Save</button>
+                <button type="button" onclick="SaveAndUpdateSchedule();" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
 </div>
+@*MODAL WINDOW TO POST AND UPDATE AN SCHEDULEITEM*@
+<div class="modal fade" id="SheduleModalItem" tabindex="-1" role="dialog" aria-labelledby="SheduleModalItemLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="SheduleModalLabel"> <i class="fa fa-calendar" aria-hidden="true">Choose the schedule where you want to add it</i></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    
+                    <input type="hidden" id="IdEventSchedule" />
+                    <input type="hidden" id="IdUserEvent" />
+                    <div class="form-group">
+                        <label for="Schedule" class="col-form-label">Schedule</label>
+                        <select class="form-control" id="DropdownSchedule" name="DropdownSchedule">
+                         </select>
+                       
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveScheduleEvent();" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL TO INVITE USERS*@
+<div class="modal fade" id="InvateUser" tabindex="-1" role="dialog" aria-labelledby="SheduleModalItemLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="SheduleModalLabel"> <i class="fa fa-calendar" aria-hidden="true">Choose the schedule where you want to add it</i></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <input type="hidden" id="IdEventInvate" />
+                    
+                    <div class="form-group">
+                        <label for="Schedule" class="col-form-label">Schedule</label>
+                        <select class="form-control" id="DropdownSchedule" name="DropdownSchedule">
+                        </select>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveScheduleEvent();" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @*PANELS*@
 <div class="row">
     <!-- Events -->
@@ -231,10 +307,11 @@
 </div>
 
 
-
+@*EVENTS COLUMNS*@
 <div class="row">
+    @*MY EVENTS*@
     <div class="col-7">
-        <div class="card border-left">
+        <div class="card border-left" style="max-height:1000Px; overflow-y:auto">
             <div class="card-header bg-primary">
 
                 <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">
@@ -252,68 +329,82 @@
             </div>
             <div class="card-body">
                 <h4>My Events</h4>
+                <hr />
                 <div class="row row-cols-1 row-cols-md-4 carditem">
 
                 </div>
+                <h4>External Events</h4>
+                <hr />
+                <div class="row row-cols-1 row-cols-md-4 cardScheduleEvent">
 
-
+                </div>
             </div>
+            
         </div>
     </div>
+    @*EXTERNAL EVENTS*@
     <div class="col-5">
-        <div class="card bg-light">
-            <div class="card-header">
-                <button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">
+        <div class="card border-primary" style="max-height:1000Px; overflow-y:auto">
+            <div class="card-header bg-info">
+                @*<button type="button" class="btn btn-secondary float-lg-right" data-toggle="modal" data-target="#EventModal">
                     New Event
                     <i class="fa fa-plus"></i>
-                </button>
-                <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter">
+                </button>*@
+                <button type="button" class="btn btn-success float-lg-right" data-toggle="modal" data-target="#EventFilter" onclick="SetTypeFilter()">
                     Filter
                     <i class="fa fa-search 2x"></i>
                 </button>
             </div>
             <div class="card-body">
-                <h4>My Events</h4>
-                <div class="row row-cols-1 row-cols-md-4 carditem">
+                <h4>External Events</h4>
+                <hr />
+                <div class="row row-cols-1 row-cols-md-2 carditemdifferent">
 
                 </div>
             </div>
-            <div class="card-body">
-
-            </div>
+           
         </div>
     </div>
-
+    
 </div>
 
 
+
+
+
 <script type="text/javascript">
+
 
 
     $(document).ready(function () {
 
         $(".datepicker").datepicker();
         $(".datepicker").datepicker("setDate", new Date("getate()"));
-        LoadEvents();
 
+        LoadEvents();
+        LoadDifferentEvents();
+        LoadScheduleEvent();
+        LoadSchedule();
         //document.getElementById("Date").valueAsDate = new Date();
 
-
     });
-    function LoadEvents() {
 
+    function LoadEvents() {
+        var user = $('#UserOwner').val();
+        
         $.ajax({
             url: '/Api/Events/',
             type: 'GET',
             dataType: 'json',
             data: {
-                UserOwner: $("#UserName").val(),
+                UserOwner: user,
                 Year: $('#Year').val(),
                 Month: $('#Month').val(),
                 Day: $('#Days').val(),
                 Date: $('#DateFilter').val(),
                 Place: $('#PlaceFilter').val(),
-                Participants: $('#Participants').val()
+                Participants: $('#Participants').val(),
+                TypeEvent: $('#TypeEventFilter').val()
             },
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
@@ -321,34 +412,113 @@
                 let TypeEvent = ['Exclusive', 'Shareable'];
                 $.each(result.Data, function (key, item) {
                     html += '<div class="col mb-3">';
-                    html += '<div class="card h-100">';
+                    if (item.TypeEvent === 2) {
+                        html += '<div class="card h-100">';
+                    }
+                    else {
+                        html += '<div class="card border-danger h-100">';
+                    }
                     html += '<svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>';
                     html += '<div class="card-body">';
                     html += '<h4 class="card-title">' + item.Name + '</h4>';
+                    html += '<p class="card-text">' + item.Description + '</p><br/>';
                     html += '<span><b>Created by:</b>   ' + item.UserOwner + '</span></br>';
 
-                    html += '<p class="card-text">' + item.Description + '</p><br/>';
-                    html += '<p><b>Type:</b>   ' + TypeEvent[item.TypeEvent - 1] + '</p></br>';
-                    html += '<p><b>Date:</b>   ' + item.Date + '</p></br>';
-                    html += '<p><b>Place:</b>   ' + item.Place + '</p></br>';
-                    html += '<p><b>Participants:</b>   ' + item.Participants; +'</p></br>';
+                   
+                    html += '<span><b>Type:</b>   ' + TypeEvent[item.TypeEvent - 1] + '</span></br>';
+                    html += '<span><b>Date:</b>   ' + item.Date + '</span></br>';
+                    html += '<span><b>Place:</b>   ' + item.Place + '</span></br>';
+                    html += '<span><b>Participants:</b>   ' + item.Participants; +'</span></br>';
                     html += '<hr/>';
                     html += '<button class="btn btn-info float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-pencil"></i></button >';
-                    html += '<button class="btn btn-danger float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-trash"></i></button>';
+                    html += '<button class="btn btn-danger float-lg-right" onclick="Delete(' + item.IdEvent + ')"><i class="fa fa-trash"></i></button>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
                 })
 
                 $('.carditem').html(html);
+                
+            }
+            
+        });
+       
+    }
+    function LoadDifferentEvents()
+    {
+        $.ajax({
+            url: '/Api/Events/',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                UserOwner: '',
+                Year: $('#Year').val(),
+                Month: $('#Month').val(),
+                Day: $('#Days').val(),
+                Date: $('#DateFilter').val(),
+                Place: $('#PlaceFilter').val(),
+                Participants: $('#Participants').val(),
+                TypeEvent: $('#TypeEventFilter').val()
+            },
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var html = '';
+                let TypeEvent = ['Exclusive', 'Shareable'];
+                var border = 'border-primary';
+                $.each(result.Data, function (key, item) {
+                   
+                    html += '<div class="col mb-3">';
+                    if (item.TypeEvent === 2) {
+                        html += '<div class="card h-100">';
+                    }
+                    else
+                    {
+                        html += '<div class="card border-danger h-100">';
+                    }
+                        
+                        html += '<svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>';
+                        html += '<div class="card-body">';
+                        html += '<h4 class="card-title">' + item.Name + '</h4>';
+                        html += '<span><b>Created by:</b>   ' + item.UserOwner + '</span></br>';
+
+
+                       html += '<span><b>Type:</b>   ' + TypeEvent[item.TypeEvent - 1] + '</span></br>';
+                       html += '<span><b>Date:</b>   ' + item.Date + '</span></br>';
+                       html += '<span><b>Place:</b>   ' + item.Place + '</span></br>';
+                       html += '<span><b>Participants:</b>   ' + item.Participants; +'</span></br>';
+                       html += '<hr/>';
+                       html += '<button class="btn btn-info float-lg-right" onclick="BookEvent(' + item.IdEvent + ')"><i class="fa fa-calendar"></i></button >';
+                        
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    
+                   
+                })
+
+                $('.carditemdifferent').html(html);
             }
         });
     }
     function FilterLoad() {
+        var filterlist = $('#TypeFilter').val();
+        if (filterlist === 'ExternalList') {
+            LoadDifferentEvents();
+            $('#TypeFilter').val("");
+        }
+        else
+        {
+            LoadEvents();
+        }
+       
         ClearFilter();
         $('#EventFilter').modal('hide');
-
-        LoadEvents();
+    }
+    function FilterLoadExternal()
+    {
+        LoadDifferentEvents();
+        ClearFilter();
+        $('#EventFilter').modal('hide');
     }
     function SaveAndUpdate() {
         var data = {
@@ -376,8 +546,10 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
+                    ClearFunction();
                     $('#EventModal').modal('hide');
                     LoadEvents();
+                    
                 }
                 else {
                     Swal.fire({
@@ -415,7 +587,7 @@
     }
     function Delete(Id) {
         $.ajax({
-            url: '/Api/Event/' + Id,
+            url: '/Api/Events/' + Id,
             type: 'DELETE',
             dataType: 'json',
             cache: 'false',
@@ -437,43 +609,37 @@
 
                     })
                 }
+                LoadEvents();
             }
+            
         });
     }
     function ClearFunction() {
-        $('#IdEvent').val();
-        $('#Name').val();
-        $('#Description').val();
-        $('#DateFilter').val();
+        $('#IdEvent').val("");
+        $('#Name').val("");
+        $('#Description').val("");
+        $('#DateFilter').val("");
         $('.TypeEvent option[value=' + 1 + ']').attr('selected', 'selected');
-        $('#Place').val();
-        $('#Participants').val();
+        $('#Place').val("");
+        $('#Participants').val("");
 
-        $()
-    }
+     }
+    
     function ClearFilter() {
 
-        $('#Year').val();
-        $('#Month').val();
-        $('#Day').val();
-        $('#DateFilter').val();
+        $('#Year').val("");
+        $('#Month').val("");
+        $('#Day').val("");
+        $('#DateFilter').val("");
 
-        $('#PlaceFilter').val();
-        $('#ParticipantsFilter').val();
+        $('#PlaceFilter').val("");
+        $('#ParticipantsFilter').val("");
 
     }
-    function getFormattedDate(dateFromDB) {
-        alert(dateFromDB);
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-
-        var yyyy = today.getFullYear();
-        if (dd < 10) { dd = '0' + dd } if (mm < 10) { mm = '0' + mm } today = mm + '/' + dd + '/' + yyyy;
-
-        $('#Date').attr('value', today);
-
-        alert($('#Date').attr('value'));
+    function SetTypeFilter()
+    {
+        $('#TypeFilter').val("ExternalList");
+        alert($('#TypeFilter').val());
     }
 
 
@@ -497,12 +663,11 @@
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Your event has been saved',
+                        title: 'Your schedule has been saved',
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    $('#EventModal').modal('hide');
-                    LoadEvents();
+                   
                 }
                 else {
                     Swal.fire({
@@ -511,15 +676,171 @@
                         text: result.Message,
                     })
                 }
-
+                $('#ScheduleModal').modal('hide');
+                LoadSchedule();
+                ClearSchedule();
             }
 
         });
     }
     function LoadSchedule()
     {
-        
+        $.ajax({
+            url: "/Api/Schedule",
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result)
+            {
+                var schedule = $("#DropdownSchedule");
+                $.each(result.Data, function (key, item)
+                {
+                    schedule.append('<option value="' + item.IdSchedule + '">' + item.NameSchedule + '</option>');
+                });
+            }
+        });
+    }
+    function GetByIDSchedule(Id) {
+        var id = Id;
+        $.ajax({
+            url: '/Api/Schedule/' + id,
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                $('#ScheduleModal').modal('show');
+                $('#IdEvent').val(result.Data.IdEvent);
+
+                $('#IdSchedule').val(result.Data.Name);
+                $('#Description').val(result.Data.Description);
+                $('#Date').val(result.Data.Date);
+                $('#TypeEvent option[value=' + result.Data.TypeEvent + ']').attr('selected', 'selected');
+                $('#Place').val(result.Data.Place);
+                $('#Participants').val(result.Data.Participants);
+            }
+        });
+
+
+                        }
+    
+     function ClearSchedule()
+                {
+                    $('#NameSchedule').val("");
     }
 
+    /*SCHEDULEEVENT FUNCTIONS*/
+    function SaveScheduleEvent()
+    {
+        var data = {
+            IdEvent: $('#IdEventSchedule').val(),
+            IdSchedule: $('#DropdownSchedule').find(":selected").val()
+        }
+       
+        $.ajax({
+            url: "/Api/ScheduleEvents",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.Status === true) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your schedule has been added',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $('#SheduleModalItem').modal('hide');
+                    LoadScheduleEvent();
+                    ClearSchedule();
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: result.Message,
+                    })
+                }
+               
+            }
+
+        });
+    }
+    function BookEvent(Id) {
+        Swal.fire({
+            title: 'Do you want to schedule it?',
+            text: "it will be saved in your schedule",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, do it!'
+        }).then((result) => {
+
+
+            if (result.isConfirmed) {
+                //$.ajax({
+                //    url: '/Api/ScheduleEvent',
+                //    type: 'POST',
+
+                //});
+                $('#IdEventSchedule').val(Id);
+                $('#SheduleModalItem').modal('show');
+
+                //Swal.fire(
+                //    'Done!',
+                //    'This event has been added.',
+                //    'success'
+                //)
+            }
+        })
+    }
+    function LoadScheduleEvent()
+    {
+        $.ajax({
+            url: '/Api/ScheduleEvents/',
+            type: 'GET',
+            dataType: 'json',
+            
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var html = '';
+                let TypeEvent = ['Exclusive', 'Shareable'];
+                $.each(result.Data, function (key, item) {
+                    html += '<div class="col mb-3">';
+                    if (item.TypeEvent === 2) {
+                        html += '<div class="card h-100">';
+                    }
+                    else {
+                        html += '<div class="card border-danger h-100">';
+                    }
+                    html += '<svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>';
+                    html += '<div class="card-body">';
+                    html += '<h4 class="card-title">' + item.Name + '</h4>';
+                    html += '<p class="card-text">' + item.Description + '</p><br/>';
+                    html += '<span><b>Created by:</b>   ' + item.UserOwner + '</span></br>';
+
+
+                    html += '<span><b>Type:</b>   ' + TypeEvent[item.TypeEvent - 1] + '</span></br>';
+                    html += '<span><b>Date:</b>   ' + item.Date + '</span></br>';
+                    html += '<span><b>Place:</b>   ' + item.Place + '</span></br>';
+                    html += '<span><b>Participants:</b>   ' + item.Participants; +'</span></br>';
+                    html += '<hr/>';
+                    //html += '<button class="btn btn-info float-lg-right" onclick="GetByID(' + item.IdEvent + ')"><i class="fa fa-pencil"></i></button >';
+                    //html += '<button class="btn btn-danger float-lg-right" onclick="Delete(' + item.IdEvent + ')"><i class="fa fa-trash"></i></button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                })
+
+                $('.cardScheduleEvent').html(html);
+
+            }
+
+        });
+
+    }
 
 </script>

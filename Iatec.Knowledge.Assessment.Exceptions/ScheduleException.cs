@@ -18,8 +18,8 @@ namespace Iatec.Knowledge.Assessment.Exceptions
         }
         public void ScheduleNameValidationException(IEnumerable<Schedule> scheduleList,Schedule entity) 
         {
-            var result = scheduleList.FirstOrDefault(c => c.NameSchedule == entity.NameSchedule);
-            if (result == null)
+            var result = scheduleList.FirstOrDefault(c => c.NameSchedule == entity.NameSchedule && c.IdUser == entity.IdUser);
+            if (result != null)
                 throw new Exception("This name has been chosen, choose a different one");
         }
     }

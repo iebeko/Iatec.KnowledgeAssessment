@@ -5,40 +5,41 @@ using Iatec.Knowledge.Assessment.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 
-
 namespace Iatec.Knowledge.Assesment.Web.Controllers
 {
-    public class ScheduleController : ApiController
+    public class ScheduleEventsController : ApiController
     {
-        private ScheduleBusiness _scheduleBusiness;
-        public ScheduleController()
+        private ScheduleEventBusiness _scheduleEventBusiness;
+        public ScheduleEventsController()
         {
-            _scheduleBusiness = new ScheduleBusiness();
+            _scheduleEventBusiness = new ScheduleEventBusiness();
         }
-        // GET: Schedule
-        public JsonResult<ApiResponse<IEnumerable<Schedule>>> Get()
+
+        public JsonResult<ApiResponse<IEnumerable<ScheduleEvent>>> Get()
         {
-            
-            var response = new ApiResponse<IEnumerable<Schedule>>();
+
+            var response = new ApiResponse<IEnumerable<ScheduleEvent>>();
             try
             {
-                if (User.Identity.IsAuthenticated) 
+                if (User.Identity.IsAuthenticated)
                 {
-                    var identity = ((CustomPrincipal)HttpContext.Current.User);
-                    
-                    var ScheduleList = _scheduleBusiness.Get().Where(c => c.IdUser == identity.UserId);
+                    var identity = User.Identity.Name;
+
+                    var ScheduleList = _scheduleEventBusiness.Get().Where(c => c.UserOwner == identity);
                     response.Data = ScheduleList;
                     response.Status = ScheduleList.Count() > 0 ? true : false;
                     response.Message = ScheduleList.Count() > 0 ? String.Empty : "No events have been added, Add one :)";
                 }
-               
-               
+
+
             }
             catch (Exception ex)
             {
@@ -51,11 +52,11 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         // GET api/values/5
         public IHttpActionResult Get(int id)
         {
-            var response = new ApiResponse<Schedule>();
+            var response = new ApiResponse<ScheduleEvent>();
 
             try
             {
-                var result = _scheduleBusiness.GetById(id);
+                var result = _scheduleEventBusiness.GetById(id);
                 response.Data = result;
                 response.Status = true;
             }
@@ -73,18 +74,19 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         [HttpPost]
         // POST api/values
         [ResponseType(typeof(Event))]
-        public async Task<IHttpActionResult> PostEvent(Schedule entity)
+        public async Task<IHttpActionResult> PostEvent(ScheduleEvent entity)
         {
             var response = new ApiResponse<Schedule>();
             try
             {
-                if (entity.IdSchedule == 0)
+                if (entity.IdScheduleEvent == 0)
                 {
                     if (User.Identity.IsAuthenticated == true)
                     {
-                        var identity = ((CustomPrincipal)HttpContext.Current.User);
-                        entity.IdUser = identity.UserId;
-                        await _scheduleBusiness.Insert(entity);
+                        var identity = User.Identity.Name;
+                        entity.UserOwner = identity;
+                        
+                        await _scheduleEventBusiness.Insert(entity);
                         response.Status = true;
                     }
                     else
@@ -94,7 +96,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                 }
                 else
                 {
-                    await _scheduleBusiness.Update(entity);
+                    await _scheduleEventBusiness.Update(entity);
                 }
 
             }
@@ -110,12 +112,12 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         [HttpPut]
         // PUT api/values/5
         [ResponseType(typeof(ApiResponse<Event>))]
-        public async Task<IHttpActionResult> PutSchedule(int id, Schedule entity)
+        public async Task<IHttpActionResult> PutSchedule(int id, ScheduleEvent entity)
         {
             var response = new ApiResponse<Event>();
             try
             {
-                await _scheduleBusiness.Update(entity);
+                await _scheduleEventBusiness.Update(entity);
                 response.Status = true;
 
             }
@@ -131,14 +133,14 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            var Event = _scheduleBusiness.GetById(id);
+            var Event = _scheduleEventBusiness.GetById(id);
             if (Event.IdSchedule == 0)
             {
                 return BadRequest();
             }
             else
             {
-                await _scheduleBusiness.Delete(id);
+                await _scheduleEventBusiness.Delete(id);
             }
             return Ok(Event);
         }

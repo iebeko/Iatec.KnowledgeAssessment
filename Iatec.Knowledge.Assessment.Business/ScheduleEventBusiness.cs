@@ -14,6 +14,7 @@ namespace Iatec.Knowledge.Assessment.Business
     {
         private UnitOfWorks unitOfWork;
         private ScheduleEventException scheduleEventException;
+        
         public ScheduleEventBusiness()
         {
             unitOfWork = new UnitOfWorks();
@@ -38,6 +39,18 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Insert(ScheduleEvent entity)
         {
+            var Event = unitOfWork.EventRepository.GetById(entity.IdEvent);
+            entity.Name = Event.Name;
+            entity.Date = Event.Date;
+            entity.Participants = Event.Participants;
+            entity.Place = Event.Place;
+            entity.TypeEvent = Event.TypeEvent;
+            entity.UserOwner = Event.UserOwner;
+            entity.Description = Event.Description;
+            entity.Year = Event.Date.Year;
+            entity.Month = Event.Date.Month;
+            entity.Days = Event.Date.Day;
+            entity.MonthName = entity.Date.ToString("MMMM").ToUpper();
             var scheduleList = unitOfWork.ScheduleRepository.Get();
             scheduleEventException.ScheduleEventValidationException(entity);
             unitOfWork.ScheduleEventRepository.Insert(entity);
