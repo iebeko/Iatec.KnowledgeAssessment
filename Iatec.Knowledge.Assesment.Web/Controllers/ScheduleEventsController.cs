@@ -18,17 +18,14 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
         {
             _scheduleEventBusiness = new ScheduleEventBusiness();
         }
-
         public JsonResult<ApiResponse<IEnumerable<ScheduleEvent>>> Get()
         {
-
             var response = new ApiResponse<IEnumerable<ScheduleEvent>>();
             try
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     var identity = User.Identity.Name;
-
                     var ScheduleList = _scheduleEventBusiness.Get().Where(c => c.UserOwner == identity);
                     response.Data = ScheduleList;
                     response.Status = ScheduleList.Count() > 0 ? true : false;
@@ -62,8 +59,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                 response.Message = ex.Message;
 
             }
-
-
             return Json(response);
         }
 
@@ -101,8 +96,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                 response.Status = false;
                 response.Message = ex.Message;
             }
-
-
             return Ok(response);
         }
         [HttpPut]

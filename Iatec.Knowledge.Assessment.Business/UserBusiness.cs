@@ -23,7 +23,7 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Delete(int id)
         {
-            unitOfWorks.UserRepository.Delete(id);
+           unitOfWorks.UserRepository.Delete(id);
            await unitOfWorks.SaveAsync();
         }
 
@@ -36,8 +36,8 @@ namespace Iatec.Knowledge.Assessment.Business
 
         public async Task Insert(User entity)
         {
-            userException.UserValidationException(entity);
-            unitOfWorks.UserRepository.Insert(entity);
+           userException.UserValidationException(entity);
+           unitOfWorks.UserRepository.Insert(entity);
            await unitOfWorks.SaveAsync();
         }
 

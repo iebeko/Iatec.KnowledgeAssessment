@@ -188,6 +188,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
 
             var smtp = new SmtpClient
             {
+
                 Host = "uumail.adventistas.org",
                 Port = 587,
                 EnableSsl = true,
@@ -204,7 +205,7 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
 
             })
 
-                smtp.Send(message);
+            smtp.Send(message);
 
         }
     }

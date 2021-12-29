@@ -61,9 +61,7 @@ namespace Iatec.Knowledge.Assesment.Web.CustomAuthentication
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
            
-                //var user = (from us in dbContext.Users
-                //            where string.Compare(username, us.Username, StringComparison.OrdinalIgnoreCase) == 0
-                //            select us).FirstOrDefault();
+                
                 var user = userBusiness.Get().Where(c => c.Username == username).FirstOrDefault();
                 if (user == null)
                 {

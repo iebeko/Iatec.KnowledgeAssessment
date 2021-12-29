@@ -68,8 +68,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                 response.Message = ex.Message;
 
             }
-
-
             return Json(response);
         }
 
@@ -107,8 +105,6 @@ namespace Iatec.Knowledge.Assesment.Web.Controllers
                 response.Status = false;
                 response.Message = ex.Message;
             }
-
-
             return Ok(response);
         }
 
