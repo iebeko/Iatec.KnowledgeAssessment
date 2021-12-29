@@ -1,13 +1,6 @@
-﻿using Iatec.Knowledge.Assesment.Web.Responses;
-using Iatec.Knowledge.Assessment.Business;
-using Iatec.Knowledge.Assessment.Entity;
-using System;
-using System.Collections.Generic;
+﻿using Iatec.Knowledge.Assessment.Business;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Iatec.Knowledge.Assesment.Web.Controllers
 {

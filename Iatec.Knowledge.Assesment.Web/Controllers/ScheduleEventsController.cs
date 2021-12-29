@@ -1,14 +1,10 @@
-﻿using Iatec.Knowledge.Assesment.Web.CustomAuthentication;
-using Iatec.Knowledge.Assesment.Web.Responses;
+﻿using Iatec.Knowledge.Assesment.Web.Responses;
 using Iatec.Knowledge.Assessment.Business;
 using Iatec.Knowledge.Assessment.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;

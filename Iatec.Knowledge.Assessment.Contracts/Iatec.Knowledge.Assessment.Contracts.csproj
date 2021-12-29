@@ -59,6 +59,7 @@
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IEvent.cs" />
     <Compile Include="Interfaces\IEventNotification.cs" />
+    <Compile Include="Interfaces\IGenericInterface.cs" />
     <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\ISchedule.cs" />
     <Compile Include="Interfaces\IScheduleEvent.cs" />

@@ -32,10 +32,7 @@ namespace Iatec.Knowledge.Assessment.Business
             return unitOfWorks.UserRepository.Get();
         }
 
-        User IUser.GetById(int id)
-        {
-            return unitOfWorks.UserRepository.GetById(id);
-        }
+      
 
         public async Task Insert(User entity)
         {
@@ -49,5 +46,12 @@ namespace Iatec.Knowledge.Assessment.Business
             unitOfWorks.UserRepository.Update(entity);
             await unitOfWorks.SaveAsync();
         }
+
+        public User GetById(int id)
+        {
+            return unitOfWorks.UserRepository.GetById(id);
+        }
+
+       
     }
 }

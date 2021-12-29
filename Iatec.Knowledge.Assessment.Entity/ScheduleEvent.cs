@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Iatec.Knowledge.Assessment.Entity
 {
-   public class ScheduleEvent
+    public class ScheduleEvent
     {
         [Key]
         public int IdScheduleEvent { get; set; }
